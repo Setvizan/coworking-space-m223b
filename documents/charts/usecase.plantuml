@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+skinparam packageStyle rect
+skinparam shadowing false
+
+actor "Member" as m
+actor "Visitor" as v
+actor "Admin" as a
+rectangle Coworking-space {
+m --> (delete account)
+m --> (change credentials)
+m --> (create booking)
+m --> (view booking status)
+m --> (delete future bookings)
+v --> (register)
+v --> (login)
+
+(create booking) .> (manage bookings): extends
+(manage bookings) <-- a
+(manage members) <-- a
+}
+@enduml
+

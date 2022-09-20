@@ -1,0 +1,1 @@
+INSERT INTO MEMBER (id, firstname, lastname, email, password_hash, is_admin) VALUES ('9135f12e-1b66-4ee6-bbae-df37303cc154','test', 'user','test.user@gmail.com', 'hash', true)

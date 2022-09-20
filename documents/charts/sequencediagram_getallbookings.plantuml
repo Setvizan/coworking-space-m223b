@@ -1,0 +1,14 @@
+@startuml
+Client -> Server: GET api/bookings
+activate Server
+Server -> Server: verify jwt token
+
+Server -> Server: check is admin
+
+Server -> Database: get bookings
+Activate Database
+Database --> Server: got bookings
+Deactivate Database
+Server -> Client: 200 Successful + Bookings
+Deactivate Server
+@enduml

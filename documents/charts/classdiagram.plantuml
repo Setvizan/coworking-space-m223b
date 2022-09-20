@@ -1,0 +1,28 @@
+@startuml
+class member
+class booking
+enum status
+enum booking_type
+
+member : UUID id
+member : VARCHAR firstname
+member : VARCHAR lastname
+member : VARCHAR email
+member : VARCHAR password
+member : BOOLEAN is_admin
+
+booking : UUID id
+booking : DATE date
+
+status : approved
+status : declined
+status : pending
+
+booking_type : morning
+booking_type : afternoon
+booking_type : day
+
+booking "n" o-- "1" member
+booking "1" *-- "1" status
+booking "1" *-- "1" booking_type
+@enduml
