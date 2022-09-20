@@ -18,8 +18,8 @@ CREATE TABLE BOOKING
     date DATE NOT NULL,
     status ENUM('APPROVED', 'DECLINED', 'PENDING') NOT NULL,
     booking_type ENUM('MORNING', 'AFTERNOON', 'DAY') NOT NULL,
-    user_id UUID NOT NULL,
+    member_id UUID NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES MEMBER (id)
+    FOREIGN KEY (member_id) REFERENCES MEMBER (id)
 );
