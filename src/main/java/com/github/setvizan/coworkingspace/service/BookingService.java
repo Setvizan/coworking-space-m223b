@@ -1,14 +1,10 @@
 package com.github.setvizan.coworkingspace.service;
 
 import com.github.setvizan.coworkingspace.exceptions.BookingNotFoundException;
-import com.github.setvizan.coworkingspace.exceptions.MemberNotFoundException;
 import com.github.setvizan.coworkingspace.model.BookingEntity;
-import com.github.setvizan.coworkingspace.model.MemberEntity;
 import com.github.setvizan.coworkingspace.repository.BookingRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +29,11 @@ public class BookingService {
         return this.bookingRepository.findAll();
     }
 
+    public List<BookingEntity> allByMemberId(UUID memberId){
+        log.info("Executing get all by member id");
+        return this.bookingRepository.findAllByMemberId(memberId);
+    }
+
     public BookingEntity oneById(UUID bookingId){
         log.info("Executing get single booking by id {}", bookingId);
         return this.bookingRepository.findById(bookingId)
@@ -41,7 +42,6 @@ public class BookingService {
                                     );
     }
 
-    @Transactional
     public BookingEntity update(BookingEntity booking, UUID bookingId){
         log.info("Execute update booking by Id {}", bookingId);
         this.oneById(bookingId);

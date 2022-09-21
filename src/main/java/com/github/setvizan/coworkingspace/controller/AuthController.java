@@ -8,11 +8,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.val;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -34,6 +32,17 @@ public class AuthController {
     public AuthController(JwtServiceHMAC jwtServiceHMAC, MemberService memberService) {
         this.jwtService = jwtServiceHMAC;
         this.memberService = memberService;
+    }
+
+    @Operation(
+            summary = "create member",
+            description = "allows one to register a new member."
+    )
+    @PostMapping
+    ResponseEntity<MemberEntity> registerMember(@RequestBody MemberEntity member) {
+        String passwordHash = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
+        member.setPassword(passwordHash);
+        return ResponseEntity.ok(this.memberService.create(member));
     }
 
     @Operation(

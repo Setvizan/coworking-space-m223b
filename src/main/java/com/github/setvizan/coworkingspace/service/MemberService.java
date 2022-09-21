@@ -3,6 +3,7 @@ package com.github.setvizan.coworkingspace.service;
 import com.github.setvizan.coworkingspace.exceptions.MemberHasBookingsException;
 import com.github.setvizan.coworkingspace.exceptions.MemberNotFoundException;
 import com.github.setvizan.coworkingspace.model.MemberEntity;
+import com.github.setvizan.coworkingspace.repository.BookingRepository;
 import com.github.setvizan.coworkingspace.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,11 @@ import java.util.UUID;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BookingRepository bookingRepository;
 
-    public MemberService(MemberRepository memberRepository){
+    public MemberService(MemberRepository memberRepository, BookingRepository bookingRepository) {
         this.memberRepository = memberRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     public MemberEntity create(MemberEntity member){
@@ -39,7 +42,6 @@ public class MemberService {
                                     );
     }
 
-    @Transactional
     public MemberEntity update(MemberEntity member, UUID memberId){
         log.info("Execute update member by Id {}", memberId);
         this.oneById(memberId);
@@ -47,12 +49,17 @@ public class MemberService {
         return this.memberRepository.save(member);
     }
 
-    @Transactional
     public void delete(UUID memberId){
         MemberEntity member = oneById(memberId);
         if(!member.getBookings().isEmpty()){
             throw new MemberHasBookingsException("Member still has open bookings");
         }
+        this.memberRepository.delete(member);
+    }
+    @Transactional
+    public void forceDelete(UUID memberId){
+        MemberEntity member = oneById(memberId);
+        this.bookingRepository.deleteAllByMemberId(member.getId());
         this.memberRepository.delete(member);
     }
 

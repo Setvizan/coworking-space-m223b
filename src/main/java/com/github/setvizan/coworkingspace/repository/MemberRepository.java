@@ -9,6 +9,5 @@ import java.util.UUID;
 
 public interface MemberRepository extends CrudRepository<MemberEntity, UUID> {
     List<MemberEntity> findAll();
-    void deleteById(UUID bookingId);
     Optional<MemberEntity> findByEmail(String email);
 }
