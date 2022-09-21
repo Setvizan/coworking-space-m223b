@@ -36,7 +36,8 @@ public class AuthController {
 
     @Operation(
             summary = "create member",
-            description = "allows one to register a new member."
+            description = "allows one to register a new member.",
+            tags = {"Registration"}
     )
     @PostMapping
     ResponseEntity<MemberEntity> registerMember(@RequestBody MemberEntity member) {

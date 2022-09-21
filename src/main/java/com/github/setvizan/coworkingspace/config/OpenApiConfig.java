@@ -19,17 +19,17 @@ public class OpenApiConfig {
                 .build();
     }
 
-//    @Bean
-//    public OpenAPI openAPI() {
-//        return new OpenAPI()
-//                .info(new Info().title("CRUD API").version("v1.0.0"))
-//                .components(new Components()
-//                        .addSecuritySchemes("JWT_Auth", new SecurityScheme()
-//                                .name("Authorization")
-//                                .type(SecurityScheme.Type.APIKEY)
-//                                .in(SecurityScheme.In.HEADER)
-//                                .scheme("apikey")
-//                        )
-//                );
-//    }
+    @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .info(new Info().title("CRUD API").version("v1.0.0"))
+                .components(new Components()
+                        .addSecuritySchemes("JWT_Auth", new SecurityScheme()
+                                .name("Authorization")
+                                .type(SecurityScheme.Type.APIKEY)
+                                .in(SecurityScheme.In.HEADER)
+                                .scheme("apikey")
+                        )
+                );
+    }
 }

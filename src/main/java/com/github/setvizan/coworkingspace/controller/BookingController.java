@@ -7,6 +7,7 @@ import com.github.setvizan.coworkingspace.model.enumerate.Status;
 import com.github.setvizan.coworkingspace.service.BookingService;
 import com.github.setvizan.coworkingspace.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +32,8 @@ public class BookingController {
 
     @Operation(
             summary = "create booking",
-            description = "allows one to create a booking"
+            description = "allows one to create a booking",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
     )
     @PostMapping
     ResponseEntity<BookingEntity> createBooking(@RequestBody BookingEntity booking) {
@@ -43,7 +45,8 @@ public class BookingController {
 
     @Operation(
             summary = "get all bookings",
-            description = "allows one to get all bookings, for regular members it only returns their own bookings"
+            description = "allows one to get all bookings, for regular members it only returns their own bookings",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
     )
     @GetMapping
     ResponseEntity<List<BookingEntity>> getAllBookings(Authentication authentication) {
@@ -56,7 +59,8 @@ public class BookingController {
 
     @Operation(
             summary = "get single booking by id",
-            description = "allows one to get a single booking"
+            description = "allows one to get a single booking",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
     )
     @GetMapping("/{id}")
     ResponseEntity<BookingEntity> getBookingById(@PathVariable(name = "id") UUID bookingId, Authentication authentication) {
@@ -73,7 +77,8 @@ public class BookingController {
 
     @Operation(
             summary = "update single booking by id",
-            description = "allows one to update a single booking"
+            description = "allows one to update a single booking",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
     )
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
@@ -87,7 +92,9 @@ public class BookingController {
 
     @Operation(
             summary = "delete single booking by id",
-            description = "allows one to delete a single booking"
+            description = "allows one to delete a single booking",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
+
     )
     @DeleteMapping("/{id}")
     ResponseEntity<String> deleteBookingById(@PathVariable(name = "id") UUID bookingId, Authentication authentication) {

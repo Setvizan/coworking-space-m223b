@@ -40,6 +40,8 @@ public class BookingEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="member_id", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private MemberEntity member;
 
     @Transient

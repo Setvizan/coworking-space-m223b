@@ -4,6 +4,7 @@ import com.github.setvizan.coworkingspace.exceptions.NoPermissionException;
 import com.github.setvizan.coworkingspace.model.MemberEntity;
 import com.github.setvizan.coworkingspace.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,7 +30,8 @@ public class MemberController {
 
     @Operation(
             summary = "get users",
-            description = "return all users"
+            description = "return all users",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
     )
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
@@ -39,7 +41,8 @@ public class MemberController {
 
     @Operation(
             summary = "get member by Id",
-            description = "return member by id"
+            description = "return member by id",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
     )
     @GetMapping("/{id}")
     ResponseEntity<MemberEntity> getMemberById(@PathVariable(name = "id") UUID memberId, Authentication authentication){
@@ -55,7 +58,8 @@ public class MemberController {
 
     @Operation(
             summary = "update member",
-            description = "update a single member"
+            description = "update a single member",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
     )
     @PutMapping("/{id}")
     ResponseEntity<MemberEntity> updateUserById(@PathVariable(name = "id") UUID memberId, @RequestBody MemberEntity member, Authentication authentication){
@@ -71,7 +75,8 @@ public class MemberController {
 
     @Operation(
             summary = "delete member",
-            description = "delete a single member"
+            description = "delete a single member",
+            security = {@SecurityRequirement(name = "JWT_Auth")}
     )
     @DeleteMapping("/{id}")
     ResponseEntity<String> updateUserById(@PathVariable(name = "id") UUID memberId, Authentication authentication){
