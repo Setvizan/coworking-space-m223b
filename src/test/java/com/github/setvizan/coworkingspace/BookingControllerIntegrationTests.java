@@ -81,10 +81,11 @@ public class BookingControllerIntegrationTests {
         bookingEntity.setMemberId(this.memberId);
         String json = objectMapper.writeValueAsString(bookingEntity);
 
-        mockMvc.perform(put("/api/bookings/e7e7070f-7dd2-4e57-bbd9-b0cbaac4e8f2").contentType(MediaType.APPLICATION_JSON)
-                                                         .content(json)
-                                                         .characterEncoding("utf-8")
-                                                         .header("Authorization", "Bearer " + memberToken)
+        mockMvc.perform(put("/api/bookings/e7e7070f-7dd2-4e57-bbd9-b0cbaac4e8f2")
+                       .contentType(MediaType.APPLICATION_JSON)
+                       .content(json)
+                       .characterEncoding("utf-8")
+                       .header("Authorization", "Bearer " + memberToken)
                )
                .andExpect(status().isForbidden())
                .andDo(print())
