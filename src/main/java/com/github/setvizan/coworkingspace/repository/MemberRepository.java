@@ -4,8 +4,11 @@ import com.github.setvizan.coworkingspace.model.MemberEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface MemberRepository extends CrudRepository<MemberEntity, UUID> {
     List<MemberEntity> findAll();
+    void deleteById(UUID bookingId);
+    Optional<MemberEntity> findByEmail(String email);
 }

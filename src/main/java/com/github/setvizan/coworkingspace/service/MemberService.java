@@ -47,11 +47,19 @@ public class MemberService {
         return this.memberRepository.save(member);
     }
 
+    @Transactional
     public void delete(UUID memberId){
         MemberEntity member = oneById(memberId);
         if(!member.getBookings().isEmpty()){
             throw new MemberHasBookingsException("Member still has open bookings");
         }
         this.memberRepository.delete(member);
+    }
+
+    public MemberEntity oneByEmail(String email){
+        return this.memberRepository.findByEmail(email)
+                                    .orElseThrow(
+                                            () -> new MemberNotFoundException("Member with email " + email + " not found" )
+                                    );
     }
 }

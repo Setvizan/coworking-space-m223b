@@ -1,7 +1,9 @@
 package com.github.setvizan.coworkingspace.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.setvizan.coworkingspace.model.enumerate.BookingType;
 import com.github.setvizan.coworkingspace.model.enumerate.Status;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,4 +41,9 @@ public class BookingEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name="member_id", nullable = false)
     private MemberEntity member;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Schema(accessMode = Schema.AccessMode.WRITE_ONLY)
+    private UUID memberId;
 }

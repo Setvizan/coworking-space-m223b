@@ -4,6 +4,7 @@ import com.github.setvizan.coworkingspace.model.MemberEntity;
 import com.github.setvizan.coworkingspace.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class MemberController {
     )
     @PostMapping
     ResponseEntity<MemberEntity> registerMember(@RequestBody MemberEntity member) {
+        String passwordHash = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
+        member.setPassword(passwordHash);
         return ResponseEntity.ok(this.memberService.create(member));
     }
 
@@ -62,6 +65,6 @@ public class MemberController {
     @DeleteMapping("/{id}")
     ResponseEntity<String> updateUserById(@PathVariable(name = "id") UUID memberId){
         this.memberService.delete(memberId);
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok("Successfully removed member with id " + memberId);
     }
 }
