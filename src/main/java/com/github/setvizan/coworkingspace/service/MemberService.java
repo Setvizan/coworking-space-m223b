@@ -51,7 +51,7 @@ public class MemberService {
 
     public void delete(UUID memberId){
         MemberEntity member = oneById(memberId);
-        if(!member.getBookings().isEmpty()){
+        if(!this.bookingRepository.findAllByMemberId(memberId).isEmpty()){
             throw new MemberHasBookingsException("Member still has open bookings");
         }
         this.memberRepository.delete(member);

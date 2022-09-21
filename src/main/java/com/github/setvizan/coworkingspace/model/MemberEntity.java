@@ -1,5 +1,7 @@
 package com.github.setvizan.coworkingspace.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -36,7 +38,4 @@ public class MemberEntity implements Serializable {
 
     @Column(name = "is_admin", nullable = false)
     private boolean isAdmin;
-
-    @OneToMany(mappedBy = "member")
-    List<BookingEntity> bookings;
 }

@@ -1,16 +1,18 @@
 package com.github.setvizan.coworkingspace.config;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.github.setvizan.coworkingspace.exceptions.BookingNotFoundException;
 import com.github.setvizan.coworkingspace.exceptions.MemberHasBookingsException;
 import com.github.setvizan.coworkingspace.exceptions.MemberNotFoundException;
 import com.github.setvizan.coworkingspace.exceptions.NoPermissionException;
+import com.github.setvizan.coworkingspace.security.JwtAuthenticationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ControllerExceptionConfig {
+public class WebExceptionConfig {
 
     @ExceptionHandler(MemberNotFoundException.class)
     public ResponseEntity<String> handleException(MemberNotFoundException e) {
@@ -38,5 +40,11 @@ public class ControllerExceptionConfig {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body(e.getMessage());
+    }
+
+    @ExceptionHandler(JWTVerificationException.class)
+    public ResponseEntity<String> handleException(JWTVerificationException e){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                             .body(e.getMessage());
     }
 }
